@@ -10,7 +10,7 @@ inputs:
   version:
     description: 'Tailscale version to use.'
     required: true
-    default: '1.6.0'
+    default: '1.10.2'
 runs:
     using: 'composite'
     steps:
@@ -38,4 +38,5 @@ runs:
         run: |
           sudo $(which tailscaled) 2>~/.tailscale/tailscaled.log &
           sleep 3
+          sudo $(which tailscale) --tun=userspace-networking --socks5-server=localhost:1055
           sudo $(which tailscale) up --authkey $TAILSCALE_AUTHKEY --hostname "github-$(cat /etc/hostname)"
